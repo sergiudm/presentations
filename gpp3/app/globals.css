@@ -176,6 +176,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .is-hyper .evolution-new-loop .evolution-link { stroke-dashoffset: 0; }
 .evolution-new-loop text { opacity: 0; transition: opacity 350ms 1300ms; }
 .is-hyper .evolution-new-loop text { opacity: 1; }
+.morph-title-dgm, .morph-title-hyper { display: inline-block; transition: opacity 700ms ease, color 700ms ease, transform 700ms cubic-bezier(.22,1,.36,1); }
+.morph-title-dgm { opacity: 1; color: var(--heading); transform: translateY(0); }
+.morph-title-hyper { opacity: .25; color: var(--text-subtle); transform: translateY(3px); }
+.morph-title-arrow { color: var(--text-subtle); opacity: .55; }
+.morph-title.is-hyper .morph-title-dgm { opacity: .25; color: var(--text-subtle); transform: translateY(3px); }
+.morph-title.is-hyper .morph-title-hyper { opacity: 1; color: var(--accent); transform: translateY(0); }
 .morph-action { margin-left: auto; display: inline-flex; align-items: center; gap: .45cqw; padding: .6cqw .9cqw; border: 1px solid var(--line); border-radius: 4px; background: var(--surface-raised); color: var(--accent); font-size: 1.05cqw; font-weight: 500; letter-spacing: 0; white-space: nowrap; }
 .morph-action:hover { border-color: var(--accent); }
 .morph-action svg { width: 1.2cqw; height: 1.2cqw; }
@@ -230,6 +236,27 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .benchmark-citations a { color: var(--accent); text-decoration: none; margin-right: .2em; }
 .benchmark-citations a:hover { text-decoration: underline; }
 .hyper-comparison .benchmark-source { color: var(--accent); font-size: 1.05cqw; }
+.agenda-with-outlook .agenda-row { padding: 1.1cqw 0; }
+.future-outlook { flex: 1 1 0; min-height: 0; display: grid; grid-template-columns: 1fr 1.06fr; gap: 4cqw; align-items: start; align-content: center; }
+.outlook-question { min-width: 0; }
+.outlook-number { display: block; margin-bottom: .9cqw; font-size: 1cqw; letter-spacing: .09em; color: var(--accent); }
+.outlook-question h3 { font-size: 1.85cqw; color: var(--heading); }
+.outlook-question > p { margin-top: 1cqw; font-size: 1.3cqw; line-height: 1.5; color: var(--text-muted); }
+.outlook-matrix { margin: 1.5cqw 0; width: 100%; border-collapse: collapse; font-size: 1.2cqw; text-align: center; }
+.outlook-matrix th, .outlook-matrix td { padding: .85cqw .55cqw; border-bottom: 1px solid var(--line); }
+.outlook-matrix thead th { font-size: 1.05cqw; font-weight: 500; color: var(--text-muted); }
+.outlook-matrix tbody th { text-align: left; font-weight: 500; color: var(--heading); }
+.outlook-matrix td { color: var(--accent); font-family: Georgia,'Times New Roman',serif; }
+.outlook-question .outlook-test { color: var(--heading); font-size: 1.2cqw; }
+.outlook-question .outlook-control { font-size: 1.08cqw; }
+.outlook-transfer { display: flex; align-items: center; gap: .55cqw; margin: 1.5cqw 0; min-height: 8.5cqw; }
+.outlook-model { flex: 1; min-width: 0; padding: .85cqw .35cqw; text-align: center; border: 1px solid var(--connector); border-radius: 4px; background: var(--slide-bg); }
+.outlook-model > svg { display: block; width: 2.05cqw; height: 2.05cqw; margin: 0 auto .65cqw; color: var(--accent); }
+.outlook-model strong { display: block; font-size: 1.1cqw; font-weight: 600; color: var(--heading); }
+.outlook-model small { display: block; margin-top: .45cqw; font-size: .92cqw; color: var(--text-muted); }
+.outlook-harness { border-color: var(--accent); background: var(--accent-surface); }
+.outlook-arrow { flex-shrink: 0; width: 1.35cqw; height: 1.35cqw; color: var(--accent); }
+.outlook-protocol { border-top: 1px solid var(--line); padding-top: 1cqw; color: var(--text-muted); font-size: 1.1cqw; }
 .references { flex: 1 1 0; min-height: 0; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: repeat(4,auto); grid-auto-flow: column; gap: .5cqw 3.5cqw; align-content: center; }
 .reference-row { display: flex; align-items: flex-start; gap: 1cqw; padding: .95cqw 0; border-top: 1px solid var(--line); color: inherit; text-decoration: none; min-width: 0; }
 .ref-number { color: var(--accent); font-size: 1.15cqw; flex-shrink: 0; padding-top: .1cqw; }

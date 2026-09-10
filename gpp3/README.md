@@ -1,6 +1,6 @@
 # Recursive Self-improvement in Agent Harness
 
-An academic 16:9 browser presentation with 10 slides for a 4–6 minute talk (about 5 minutes at the suggested pace). English slides and Chinese speaker notes. Built with React, Vinext, and CSS/SVG animations.
+An academic 16:9 browser presentation with 11 slides for a 4–6 minute talk (about 5 minutes 45 seconds at the suggested pace). English slides and Chinese speaker notes. Built with React, Vinext, and CSS/SVG animations.
 
 Live site: <https://sergiudm.github.io/presentations/gpp3/> (deployed from `main` by GitHub Actions).
 
@@ -17,7 +17,7 @@ Live site: <https://sergiudm.github.io/presentations/gpp3/> (deployed from `main
 - Slide 6 starts with the same DGM diagram as slide 4. Click the slide or Reveal Hyperagents (or press Right / Space) to animate the editable boundary and meta self-modification loop. Press Right again for results; Left or Back to DGM resets the diagram. Re-entering slide 6 also resets it.
 - Autoplay waits for the reveal on slide 6, then resumes its slide timer.
 
-Autoplay pauses while notes or overview are open. Every slide supports a direct URL hash (#1 through #10). Reduced-motion preferences disable decorative transitions.
+Autoplay pauses while notes or overview are open. Every slide supports a direct URL hash (#1 through #11). Reduced-motion preferences disable decorative transitions.
 
 ## Development
 
@@ -42,7 +42,7 @@ npm run build
 
 
 
-The talk covers the harness, DGM's pipeline and results, then Hyperagents and selected results. DGM's SWE-bench numbers refer to its 200-task Verified subset; its Polyglot numbers refer to the full benchmark with pass@1. The DGM result slide is retained.
+The talk covers the harness, DGM's pipeline and results, then Hyperagents and selected results, followed by a future outlook on harness/model attribution and transfer to lower-cost task models. DGM's SWE-bench numbers refer to its 200-task Verified subset; its Polyglot numbers refer to the full benchmark with pass@1. The DGM result slide is retained.
 
 Hyperagents results use bar charts from §5.1–5.2 / Figs. 2–3: held-out paper review and robotics reward design compare original DGM, manually adapted DGM-custom, and DGM-H. Cross-domain math grading compares transfer agents sourced from DGM-custom and DGM-H, each with its meta agent fixed for 50 target-domain iterations (improvement@50). Values are five-run medians with 95% bootstrap confidence intervals. DGM-H significantly outperforms original DGM on review and robotics; its higher medians versus DGM-custom are not statistically significant. Coding performance is comparable, so the slide scopes the advantage to non-coding tasks and transferable improvement. See the speaker notes for all plotted values and confidence intervals.
 
