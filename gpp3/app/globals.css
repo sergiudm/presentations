@@ -299,8 +299,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .notice button { background: none; border: 0; color: inherit; }
 /* Fullscreen uses the entire stage; controls float without reserving a row. */
 .deck.is-fullscreen { padding: 0; background: var(--canvas); }
-.is-fullscreen .stage { align-items: flex-end; }
-.is-fullscreen .slide { border: 0; box-shadow: none; }
+.is-fullscreen .stage { align-items: center; }
+/* Fill the viewport edge to edge. On a 16:9 screen this is identical to the
+   letterboxed layout; on taller screens the slide stretches (down to a 4:3
+   cap) instead of leaving a blank strip above; wider screens letterbox the
+   sides so the slide is never stretched or cropped. */
+.is-fullscreen .slide { width: min(100cqw, 177.778cqh); height: min(100cqh, 75cqw); border: 0; box-shadow: none; }
 .is-fullscreen .toolbar { position: fixed; right: max(12px,env(safe-area-inset-right)); bottom: max(12px,env(safe-area-inset-bottom)); z-index: 20; width: auto; height: auto; padding: 4px; border-radius: 8px; background: var(--slide-bg); opacity: .4; transition: opacity .3s; }
 .is-fullscreen .toolbar:hover, .is-fullscreen .toolbar:focus-within { opacity: 1; }
 @keyframes slide-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
