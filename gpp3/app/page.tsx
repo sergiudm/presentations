@@ -8,7 +8,7 @@ import {HyperResults} from './hyper-results';
 import {FutureOutlook} from './future-outlook';
 import {refs,ReferenceLinks} from './references';
 import {HarnessPipeline,EvolutionPipeline} from './pipelines';
-const titles=["AI improves AI: Recursive Self-improvement in Agent Harness", "Contents", "The agent harness", "Darwin Gödel Machine: the pipeline", "Evidence from the Darwin Gödel Machine", "Hyperagents", "Results from Hyperagents", "Future outlook", "References", "Q&A", "Thank you"];
+const titles=["AI Improves AI: Recursive Self-improvement in Agent Harness", "Contents", "The agent harness", "Darwin Gödel Machine: the pipeline", "Evidence from the Darwin Gödel Machine", "Hyperagents", "Results from Hyperagents", "Future outlook", "References", "Q&A", "Thank you"];
 const durations=[15,15,35,60,45,55,55,45,10,5,5];
 const sections=['RESEARCH PRESENTATION','CONTENTS','INTRODUCTION','DARWIN GÖDEL MACHINE','DARWIN GÖDEL MACHINE','HYPERAGENTS','HYPERAGENTS','FUTURE OUTLOOK','REFERENCES','DISCUSSION','CLOSING'];
 function Cite({ids,extra}:{ids:number[],extra?:string}){return <p className="citation">{ids.map((id,i)=><span key={id}>{i>0?' · ':''}<a href={refs[id-1].url} target="_blank" rel="noreferrer">[{id}] {refs[id-1].authors}, {refs[id-1].year}</a></span>)}{extra&&` · ${extra}`}</p>}
