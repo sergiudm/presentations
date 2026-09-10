@@ -22,7 +22,7 @@
     <div id="deck-hud" aria-hidden="true">
       <span>CS-XXX · RL FOR LLMS</span>
     </div>
-    <div id="slide-page-number" aria-label="Slide 1 of 37">01 / 37</div>
+    <div id="slide-page-number" aria-label="Slide 1 of 40">01 / 40</div>
     <div class="reveal">
       <div class="slides">
         <section class="hero-slide course-hero" data-background-image="./assets/rl-maze-hero.png" data-background-opacity="0.38">
@@ -699,6 +699,104 @@ DeepSeek-AI, DeepSeek-R1. https://arxiv.org/abs/2501.12948</aside>
 
 [Sources]
 DeepSeek-AI, DeepSeek-R1. https://arxiv.org/abs/2501.12948
+Chu et al., SFT Memorizes, RL Generalizes. https://arxiv.org/abs/2501.17161</aside>
+        </section>
+
+        <section class="kl-slide kl-objective-slide">
+          <header>
+            <p class="kicker">ONE DIVERGENCE, TWO DIRECTIONS</p>
+            <h2>SFT and RL minimize the KL divergence with its arguments swapped.</h2>
+          </header>
+          <div class="kl-duo">
+            <article class="kl-panel panel-sft fragment fade-up">
+              <small>SFT · FORWARD DIRECTION</small>
+              <div class="kl-eq" data-math="\mathcal{L}_{\mathrm{SFT}}(\theta)=-\,\mathbb{E}_{x\sim p_{\mathrm{data}}}\big[\log \pi_\theta(x)\big]"></div>
+              <div class="kl-equiv"><small>MINIMIZES</small><i data-math="D_{KL}\big(p_{\mathrm{data}}\,\Vert\,\pi_\theta\big)"></i></div>
+              <p>The expectation runs over <b>demonstrations</b> — including behavior the model would never sample on its own.</p>
+            </article>
+            <article class="kl-panel panel-rl fragment fade-up">
+              <small>RL · REVERSE DIRECTION</small>
+              <div class="kl-eq" data-math="\max_\theta\ \mathbb{E}_{x\sim\pi_\theta}\big[r(x)\big]-\beta\, D_{KL}\big(\pi_\theta\,\Vert\,\pi_{\mathrm{ref}}\big)"></div>
+              <div class="kl-equiv"><small>MINIMIZES</small><i data-math="D_{KL}\big(\pi_\theta\,\Vert\,\pi^{*}\big)"></i></div>
+              <p>The expectation runs over <b>the model's own samples</b> — nothing the policy never generates is ever updated.</p>
+            </article>
+          </div>
+          <p class="kl-swap fragment fade-up">Same divergence family. Swap which distribution the expectation draws from — <em>and the geometry of learning changes.</em></p>
+          <p class="slide-cite"><a href="https://arxiv.org/abs/2203.02155">Ouyang et al., 2022</a></p>
+          <aside class="notes">Timing: 2 minutes. Make the correspondence explicit rather than deriving it. SFT is maximum likelihood: cross-entropy differs from forward KL by the constant entropy of the data, so minimizing one minimizes the other, and the best fit is the data distribution itself. KL-regularized RL — the objective PPO and GRPO optimize, from InstructGPT onward — carries the reverse direction; its optimum tilts the reference policy by the reward, pi* proportional to pi_ref times exp(r/beta). Which distribution the expectation draws from is the entire story of the next slide.
+
+[Sources]
+Ouyang et al., Training language models to follow instructions. https://arxiv.org/abs/2203.02155</aside>
+        </section>
+
+        <section class="kl-slide kl-behavior-slide">
+          <header>
+            <p class="kicker">MASS-COVERING VS MODE-SEEKING</p>
+            <h2>Forward KL covers every mode. Reverse KL commits to one.</h2>
+          </header>
+          <div class="kl-duo">
+            <article class="kl-panel panel-sft fragment fade-up">
+              <small>FORWARD · <span data-math="D_{KL}(p\,\Vert\,q)"></span></small>
+              <div class="kl-eq kl-eq-sm" data-math="D_{KL}(p\,\Vert\,q)=\mathbb{E}_{x\sim p}\big[\log p(x)-\log q(x)\big]"></div>
+              <svg class="kl-curve" viewBox="0 0 520 190" aria-hidden="true">
+                <path class="target" d="M 20 158 C 55 156 75 72 135 66 C 195 60 210 124 262 126 C 314 128 330 58 385 54 C 440 50 465 156 500 158" />
+                <path class="fit-area" d="M 20 158 C 90 152 120 84 195 82 C 270 80 280 104 330 104 C 380 104 400 84 500 156 L 500 160 L 20 160 Z" />
+                <path class="fit" d="M 20 158 C 90 152 120 84 195 82 C 270 80 280 104 330 104 C 380 104 400 84 500 156" />
+                <circle class="dot" cx="90" cy="110" r="3.5" /><circle class="dot" cx="115" cy="74" r="3.5" /><circle class="dot" cx="140" cy="67" r="3.5" /><circle class="dot" cx="165" cy="80" r="3.5" /><circle class="dot" cx="230" cy="122" r="3.5" /><circle class="dot" cx="262" cy="126" r="3.5" /><circle class="dot" cx="330" cy="72" r="3.5" /><circle class="dot" cx="358" cy="58" r="3.5" /><circle class="dot" cx="386" cy="55" r="3.5" /><circle class="dot" cx="415" cy="64" r="3.5" /><circle class="dot" cx="445" cy="92" r="3.5" />
+                <line class="axis" x1="16" y1="160" x2="504" y2="160" />
+                <text x="20" y="26">p_data — demonstrations</text>
+                <text class="fitlabel" x="268" y="64">π_θ after SFT</text>
+              </svg>
+              <b class="kl-verdict">Wherever the data lives, the fit must follow.</b>
+              <p>A demonstrated mode with <span data-math="\pi(x)\approx 0"></span> sends the loss toward infinity — so SFT keeps mass on every mode it is shown. <em>Mass-covering.</em></p>
+            </article>
+            <article class="kl-panel panel-rl fragment fade-up">
+              <small>REVERSE · <span data-math="D_{KL}(q\,\Vert\,p)"></span></small>
+              <div class="kl-eq kl-eq-sm" data-math="D_{KL}(q\,\Vert\,p)=\mathbb{E}_{x\sim q}\big[\log q(x)-\log p(x)\big]"></div>
+              <svg class="kl-curve" viewBox="0 0 520 190" aria-hidden="true">
+                <path class="target" d="M 20 158 C 55 156 75 72 135 66 C 195 60 210 124 262 126 C 314 128 330 58 385 54 C 440 50 465 156 500 158" />
+                <path class="fit-area" d="M 20 158 C 62 154 92 34 136 30 C 180 26 205 152 250 156 L 500 158 L 500 160 L 20 160 Z" />
+                <path class="fit" d="M 20 158 C 62 154 92 34 136 30 C 180 26 205 152 250 156 L 500 158" />
+                <circle class="dot" cx="95" cy="60" r="3.5" /><circle class="dot" cx="112" cy="38" r="3.5" /><circle class="dot" cx="136" cy="30" r="3.5" /><circle class="dot" cx="158" cy="36" r="3.5" /><circle class="dot" cx="180" cy="66" r="3.5" /><circle class="dot" cx="200" cy="120" r="3.5" />
+                <line class="axis" x1="16" y1="160" x2="504" y2="160" />
+                <text x="20" y="26">p_data — demonstrations</text>
+                <text class="fitlabel" x="58" y="20">π_θ after RL</text>
+              </svg>
+              <b class="kl-verdict">Modes the policy never samples cost nothing.</b>
+              <p>The average only visits the policy's own samples: unrewarded modes fade silently. <em>Mode-seeking.</em></p>
+            </article>
+          </div>
+          <aside class="notes">Timing: 2 minutes. Derive the asymmetry from the expectation, not from folklore. Forward KL averages log(p/q) under the data: any demonstrated behavior with near-zero model probability sends the loss toward infinity, so the fit must keep mass on every demonstrated mode — mass-covering. Reverse KL averages under the model: behavior the policy never generates never enters the average, so dropping a mode is free, while probability the data would not sanction is punished — mode-seeking. This is the classic forward/reverse KL asymmetry, seen through the lens of where each training signal comes from.</aside>
+        </section>
+
+        <section class="kl-slide kl-payoff-slide">
+          <header>
+            <p class="kicker">THE KL LENS ON THE RUNWAY</p>
+            <h2>The divergence direction explains why the stages work.</h2>
+          </header>
+          <div class="kl-cards">
+            <article class="fragment fade-up">
+              <small>SFT · FORWARD KL</small>
+              <h3>Coverage by construction</h3>
+              <p>Learns from demonstrations the model would never sample — format and skills arrive as data coverage, bounded by what the data shows.</p>
+            </article>
+            <article class="fragment fade-up">
+              <small>RL · REVERSE KL</small>
+              <h3>Commitment by exploration</h3>
+              <p>Improves only along its own samples: rewarded modes sharpen, unsampled ones fade. Whatever exploration misses, RL cannot learn.</p>
+            </article>
+            <article class="fragment fade-up">
+              <small>β IS THE DIAL</small>
+              <h3>Between cover and commit</h3>
+              <p>The KL penalty in PPO and GRPO sets how far the policy may sharpen away from the reference — large β holds coverage, small β chases reward.</p>
+            </article>
+          </div>
+          <p class="bottom-claim fragment fade-up">Cover first, then commit — the <em>argument order</em> of the KL is why the pipeline runs SFT → RL.</p>
+          <p class="slide-cite"><a href="https://arxiv.org/abs/2203.02155">Ouyang et al., 2022</a> · <a href="https://arxiv.org/abs/2501.17161">Chu et al., 2025</a></p>
+          <aside class="notes">Timing: 1.5 minutes. Close the loop with the runway metaphor from three slides ago. SFT's forward KL buys coverage, including behavior outside the model's current sampling range. RL's reverse KL can only sharpen modes the policy already visits — which is why the initialization spectrum on the next slide matters, and why narrow rewards can collapse diversity. The KL coefficient beta, present in both PPO and GRPO, is the operational dial between the two geometries.
+
+[Sources]
+Ouyang et al., Training language models to follow instructions. https://arxiv.org/abs/2203.02155
 Chu et al., SFT Memorizes, RL Generalizes. https://arxiv.org/abs/2501.17161</aside>
         </section>
 
