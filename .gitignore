@@ -1,0 +1,15 @@
+# generated site
+/_site/
+
+# dependencies
+node_modules/
+
+# tooling caches and generated files
+.next/
+.vinext/
+.wrangler/
+next-env.d.ts
+
+# misc
+.DS_Store
+*.log
